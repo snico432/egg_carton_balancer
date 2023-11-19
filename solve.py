@@ -1,26 +1,20 @@
 from math import ceil
 
-def printMove(indexOfZero, indexOfOne, numCols):
-    
-    x1 =  (indexOfOne + 1) % numCols
-    if x1 == 0: ## Since we are using mod, column will be 0 if we are at a multiple of numCols but me want it to be numCols instead
-        x1 = numCols
+def string_index_to_row_col(index, numCols):
+    column = (index % numCols) + 1
+    row = ceil((index + 1)/numCols)
 
-    y1 = ceil((indexOfOne+1)/numCols)
-    
-    x2 = (indexOfZero+1) % numCols
-    if x2 == 0:
-        x2 = numCols
-    
-    y2 = ceil((indexOfZero+1)/numCols)
+    return (row, column)
 
-    print(f"Move the egg in column {x1} of row {y1} to column {x2} of row {y2}")
+def printMove(emptyIndex, eggIndex, numCols):
+    emptyRow, emptyColumn  = string_index_to_row_col(emptyIndex, numCols)
+    eggRow, eggColumn = string_index_to_row_col(eggIndex, numCols)
 
+    print(f"Move the egg in column {eggColumn} of row {eggRow} to column {emptyColumn} of row {emptyRow}")
 
 def minSwapBalance(bStr):
     n = len(bStr)
-    numRows = int(input("How many rows?: "))
-    numCols = int(input("How many cols?: "))
+    numCols = int(input("How many columns are there?: "))
 
     # Find mismatched pairs
     mismatches = [[], []]
@@ -39,7 +33,6 @@ def minSwapBalance(bStr):
         bStr[one] = 0
         printMove(zero, one, numCols)
 
-
     ## The string is already a palindrome
     if mismatches[0] == mismatches[1]:
         return bStr
@@ -47,7 +40,7 @@ def minSwapBalance(bStr):
     # Since mismatched pairs have all been resolved, the only
     # remaining mismatches can be due to an unequal amount of 1's in each
     # half. Thus, we must simpy swap the remainng unbalanced 1's
-    print(mismatches)
+    # print(mismatches)
     if mismatches[0]:
         temp = bStr[n-mismatches[0][1] - 1]
         bStr[n-mismatches[0][1]- 1] = bStr[mismatches[0][0]]
@@ -63,5 +56,10 @@ def minSwapBalance(bStr):
 
 # givenStr = str(input("Enter a string: "))
 # bStr = [int(c) for c in givenStr]
-test = [0,0,0,1,0,1,1,1,0,1,1,0,1,1,0,1,0,1]
-minSwapBalance(test)
+bStr= [0,0,0,
+       1,0,1,
+       1,1,0,
+       1,1,0,
+       1,1,0,
+       1,0,1]
+minSwapBalance(bStr)
