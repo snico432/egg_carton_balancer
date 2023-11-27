@@ -5,8 +5,7 @@ def genBitString(n):
     result = ["".join(seq) for seq in itertools.product("01", repeat=n)]
     return result
 
-
-## Generates all bit strings up to length n
+## Generates all bit strings of length 1 to n
 def genAllBitStrings(n):
     bStrings = {}
     for i in range(1, n+1):
@@ -15,7 +14,7 @@ def genAllBitStrings(n):
     return bStrings
 
 if __name__ == "__main__":
-    n = int(input("Enter a positive integer: "))
+    n = 0
     while (n<=0):
         n = int(input("Enter a positive integer: "))
     result = genAllBitStrings(n)
